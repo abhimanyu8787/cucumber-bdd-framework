@@ -1,8 +1,11 @@
 package bdd.automation.pages;
 
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 
 import bdd.automation.utils.GenericMethods;
+import bdd.automation.utils.Utility;
 
 public class LoginPage {
     
@@ -14,6 +17,11 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         genericMethods = new GenericMethods();
+    }
+    
+    public void navigateToLoginPage() throws IOException {
+        String url = Utility.getGlobalProperties("applicationUrl");
+        genericMethods.navigateToUrl(driver, url);
     }
     
     public void enterValidCredentials() throws Exception {

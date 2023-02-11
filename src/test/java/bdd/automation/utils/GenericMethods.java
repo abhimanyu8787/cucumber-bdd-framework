@@ -8,22 +8,41 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericMethods {
-    
+
     private WebElement element;
     private Select selectList;
-    
+
+    /*
+     * Method to enter text into text field
+     * 
+     * @since: 11/02/2023
+     * 
+     * @author: Abhimanyu
+     * 
+     * @param driver : WebDriver : driver object
+     * 
+     * @param objectName : String : Object Name
+     * 
+     * @param text :String : Text value to enter in field
+     * 
+     * @throws Exception
+     */
     public void enterText(WebDriver driver, String objectName, String text) throws Exception {
         try {
             element = Utility.readFromExcel(objectName, driver);
             waitForElementToDisplay(driver, objectName, "5");
         } catch (Exception e) {
             String error = e.getMessage();
-            throw new Exception("Unable to find "+objectName, e);
+            throw new Exception("Unable to find " + objectName, e);
         }
         element.clear();
         element.sendKeys(text);
     }
     
+    public void navigateToUrl(WebDriver driver, String url) {
+        driver.get(url);
+    }
+
     public void click(WebDriver driver, String objectName) throws Exception {
         try {
             element = Utility.readFromExcel(objectName, driver);
@@ -35,16 +54,16 @@ public class GenericMethods {
             throw new Exception("Error While Clicking on " + objectName, e);
         }
     }
-    
+
     public void waitForElementToDisplay(WebDriver driver, String objectName, String duration) throws Exception {
         By byEle = Utility.mapFromExcel.get(objectName);
-        WebDriverWait wait = (new WebDriverWait(driver, Integer.parseInt(duration)*1000));
+        WebDriverWait wait = (new WebDriverWait(driver, Integer.parseInt(duration) * 1000));
         wait.until(ExpectedConditions.visibilityOfElementLocated(byEle));
     }
-    
+
     public void waitForElementToClick(WebDriver driver, String objectName, String duration) throws Exception {
         By byEle = Utility.mapFromExcel.get(objectName);
-        WebDriverWait wait = (new WebDriverWait(driver, Integer.parseInt(duration)*1000));
+        WebDriverWait wait = (new WebDriverWait(driver, Integer.parseInt(duration) * 1000));
         wait.until(ExpectedConditions.elementToBeClickable(byEle));
     }
 

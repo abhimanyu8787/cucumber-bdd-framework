@@ -32,9 +32,9 @@ public class TestBase {
                 throw new Exception("Unhandled Execution Mode!");
             }
             
-            String applicationUrl = Utility.getGlobalProperties("applicationUrl");
+            //String applicationUrl = Utility.getGlobalProperties("applicationUrl");
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            driver.get(applicationUrl);
+            //driver.get(applicationUrl);
             return driver;
         }
         return driver;
