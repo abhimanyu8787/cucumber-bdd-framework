@@ -1,5 +1,7 @@
 package bdd.automation.utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
@@ -24,6 +26,10 @@ public class TestBase {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments(chromeConfig);
                 options.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
+                Map<String, Object> prefs = new HashMap<String, Object>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                options.setExperimentalOption("prefs", prefs);
                 
                 driver = new ChromeDriver(options);
                 break;

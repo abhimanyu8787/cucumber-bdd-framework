@@ -40,5 +40,9 @@ public class LoginPage {
     public void clickOnLogin() throws Exception {
         genericMethods.click(driver, "LoginButton");
     }
+    
+    public String getInvalidCredentialsErrorMessage() throws Exception {
+        return genericMethods.getElementText(driver, "invalidCredentialsMessage");
+    }
 
 }
