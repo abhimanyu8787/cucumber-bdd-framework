@@ -10,22 +10,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class GenericMethods {
 
-    private WebElement element;
-    private Select selectList;
+    private WebElement element = null;
+    private WebElement dropdown = null;
+    private Select selectList = null;
+    private String old_win = null;
+    private String latWinHandle;
 
-    /*
+    /**
      * Method to enter text into text field
      * 
      * @since: 11/02/2023
-     * 
-     * @author: Abhimanyu
-     * 
-     * @param driver : WebDriver : driver object
-     * 
-     * @param objectName : String : Object Name
-     * 
-     * @param text :String : Text value to enter in field
-     * 
+     * @author: abhimanyu_kumar
+     * @param driver 
+     *            : WebDriver : driver object
+     * @param objectName 
+     *            : String : Object Name
+     * @param text 
+     *            : String : Text value to enter in field
      * @throws Exception
      */
     public void enterText(WebDriver driver, String objectName, String text) throws Exception {
@@ -40,17 +41,35 @@ public class GenericMethods {
         element.sendKeys(text);
     }
     
-    /*
-     * Method to get text of a webelement
+    /**
+     * Method to clear text of text field
      * 
      * @since: 11/02/2023
+     * @author: abhimanyu_kumar
+     * @param driver 
+     *            : WebDriver : driver object
+     * @param objectName 
+     *            : String : Object Name
+     * @throws Exception
+     */
+    public void clearText(WebDriver driver, String objectName) throws Exception {
+        try {
+            element = Utility.readFromExcel(objectName, driver);
+        } catch (Exception e) {
+            throw new Exception("Unable to find " + objectName, e);
+        }
+        element.clear();
+    }
+    
+    /**
+     * Method to get text of a WebElement
      * 
-     * @author: Abhimanyu
-     * 
-     * @param driver : WebDriver : driver object
-     * 
-     * @param objectName : String : Object Name
-     * 
+     * @since: 11/02/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param objectName
+     *            : String : Object Name
      * @throws Exception
      */
     public String getElementText(WebDriver driver, String objectName) throws Exception {
@@ -62,21 +81,29 @@ public class GenericMethods {
         return element.getText();
     }
     
+    /**
+     * Method to open link
+     * 
+     * @since 11/02/2023
+     * @author abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param url
+     *            : String : URL for navigation
+     */
     public void navigateToUrl(WebDriver driver, String url) {
         driver.get(url);
     }
 
-    /*
+    /**
      * Method to perform click operation on a WebElement
      * 
      * @since: 11/02/2023
-     * 
-     * @author: Abhimanyu
-     * 
-     * @param driver : WebDriver : driver object
-     * 
-     * @param objectName : String : Object Name
-     * 
+     * @author: abhimanyu_kumar
+     * @param driver 
+     *            : WebDriver : driver object
+     * @param objectName 
+     *            : String : Object Name
      * @throws Exception
      */
     public void click(WebDriver driver, String objectName) throws Exception {
@@ -91,17 +118,15 @@ public class GenericMethods {
         }
     }
     
-    /*
+    /**
      * Method to perform double click operation on a WebElement
      * 
      * @since: 11/02/2023
-     * 
-     * @author: Abhimanyu
-     * 
-     * @param driver : WebDriver : driver object
-     * 
-     * @param objectName : String : Object Name
-     * 
+     * @author: abhimanyu_kumar
+     * @param driver 
+     *            : WebDriver : driver object
+     * @param objectName 
+     *            : String : Object Name
      * @throws Exception
      */
     public void doubleClick(WebDriver driver, String objectName) throws Exception {
@@ -113,6 +138,56 @@ public class GenericMethods {
         
         Actions action = new Actions(driver);
         action.moveToElement(element).doubleClick().perform();
+    }
+    
+    /**
+     * Method to select element from Dropdown by type
+     * 
+     * @since: 11/02/2023
+     * @author: abhimanyu_kumar
+     * @param select_list 
+     *            : Select : Select variable
+     * @param byType 
+     *            : String : Name of by type
+     * @param option 
+     *            : String : Option to select
+     * @throws Exception
+     */
+    public void selectElementFromDropdownByType(Select select_list, String byType, String option) {
+        if(byType.equals("selectByIndex")) {
+            int index = Integer.parseInt(option);
+            select_list.selectByIndex(index);
+        }else if(byType.equals("value")) {
+            select_list.selectByValue(option);
+        }else if(byType.equals("text")) {
+            select_list.selectByVisibleText(option);
+        }
+    }
+    
+    /**
+     * Method to select element from dropdown list
+     * 
+     * @since: 11/02/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param objectName 
+     *            : String : Object name
+     * @param optionBy 
+     *            : String : Name of by type
+     * @param option 
+     *            : String : Option to select
+     * @throws Exception
+     */
+    public void selectOptionFromDropdown(WebDriver driver, String objectName, String optionBy, String option) throws Exception {
+        dropdown = Utility.readFromExcel(objectName, driver);
+        selectList = new Select(dropdown);
+        if(optionBy.equals("selectByIndex"))
+            selectList.selectByIndex(Integer.parseInt(option)-1);
+        else if(optionBy.equals("value"))
+            selectList.selectByValue(option);
+        else if(optionBy.equals("text"))
+            selectList.selectByVisibleText(option);
     }
 
     public void waitForElementToDisplay(WebDriver driver, String objectName, String duration) throws Exception {
