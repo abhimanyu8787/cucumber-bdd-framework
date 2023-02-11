@@ -47,10 +47,4 @@ public class LoginPageStepDefinitions {
         loginPage.clickOnLogin();
     }
 
-    @Then("verify if login is successful")
-    public void verify_if_login_is_successful() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
-    }
-
 }

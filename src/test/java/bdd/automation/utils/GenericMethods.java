@@ -39,6 +39,28 @@ public class GenericMethods {
         element.sendKeys(text);
     }
     
+    /*
+     * Method to get text of a webelement
+     * 
+     * @since: 11/02/2023
+     * 
+     * @author: Abhimanyu
+     * 
+     * @param driver : WebDriver : driver object
+     * 
+     * @param objectName : String : Object Name
+     * 
+     * @throws Exception
+     */
+    public String getElementText(WebDriver driver, String objectName) throws Exception {
+        try {
+            element = Utility.readFromExcel(objectName, driver);
+        } catch (Exception e) {
+            throw new Exception("Unable to find "+objectName, e);
+        }
+        return element.getText();
+    }
+    
     public void navigateToUrl(WebDriver driver, String url) {
         driver.get(url);
     }
