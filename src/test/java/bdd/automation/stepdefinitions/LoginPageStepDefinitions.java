@@ -2,6 +2,8 @@ package bdd.automation.stepdefinitions;
 
 import java.io.IOException;
 
+import org.testng.Assert;
+
 import bdd.automation.pages.LoginPage;
 import bdd.automation.utils.TestContextSetup;
 import bdd.automation.utils.Utility;
@@ -45,6 +47,12 @@ public class LoginPageStepDefinitions {
     public void user_clicks_on_login_button() throws Exception {
         // Write code here that turns the phrase above into concrete actions
         loginPage.clickOnLogin();
+    }
+    
+    @Then("verify if {string} error message is displayed")
+    public void verify_if_error_message_is_displayed(String expectedErrorMessage) throws Exception {
+        String actualErorrMessage = loginPage.getInvalidCredentialsErrorMessage();
+        Assert.assertEquals(actualErorrMessage, expectedErrorMessage);
     }
 
 }
