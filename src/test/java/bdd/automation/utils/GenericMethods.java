@@ -3,6 +3,7 @@ package bdd.automation.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -65,6 +66,19 @@ public class GenericMethods {
         driver.get(url);
     }
 
+    /*
+     * Method to perform click operation on a WebElement
+     * 
+     * @since: 11/02/2023
+     * 
+     * @author: Abhimanyu
+     * 
+     * @param driver : WebDriver : driver object
+     * 
+     * @param objectName : String : Object Name
+     * 
+     * @throws Exception
+     */
     public void click(WebDriver driver, String objectName) throws Exception {
         try {
             element = Utility.readFromExcel(objectName, driver);
@@ -75,6 +89,30 @@ public class GenericMethods {
             String error = e.getMessage();
             throw new Exception("Error While Clicking on " + objectName, e);
         }
+    }
+    
+    /*
+     * Method to perform double click operation on a WebElement
+     * 
+     * @since: 11/02/2023
+     * 
+     * @author: Abhimanyu
+     * 
+     * @param driver : WebDriver : driver object
+     * 
+     * @param objectName : String : Object Name
+     * 
+     * @throws Exception
+     */
+    public void doubleClick(WebDriver driver, String objectName) throws Exception {
+        try {
+            element = Utility.readFromExcel(objectName, driver);
+        } catch (Exception e) {
+            throw new Exception("Unable to find" + objectName, e);
+        }
+        
+        Actions action = new Actions(driver);
+        action.moveToElement(element).doubleClick().perform();
     }
 
     public void waitForElementToDisplay(WebDriver driver, String objectName, String duration) throws Exception {
