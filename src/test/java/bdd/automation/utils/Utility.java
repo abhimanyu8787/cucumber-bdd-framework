@@ -20,8 +20,8 @@ import org.openqa.selenium.WebElement;
 
 public class Utility {
     
-    private static Map<String, By> mapFromExcel = new HashMap();
-    private static String objectLocatorFile = "src\\test\\resources\\objectLocators\\ObjectLocators.xlsx";
+    public static Map<String, By> mapFromExcel = new HashMap();
+    public static String objectLocatorFile = "src\\test\\resources\\objectLocators\\ObjectLocators.xlsx";
     
     public static String getGlobalProperties(String key) throws IOException {
         FileReader reader = new FileReader("GlobalSettings.properties");
