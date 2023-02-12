@@ -59,10 +59,13 @@ public class PersonalInformationManagementPage {
         genericMethods.enterText(driver, "confirmPasswordTextBox", password);
     }
     
-    public void uploadEmployeeProfilePicture(String fileName) {
-        String filePath = System.getProperty("user.dir")+"\\src\\test\\resources\\uploadFiles"+fileName;
-        String autoItScriptPath = System.getenv("user.dir")+"\\src\\test\\resources\\AutoIt\\executable\\script.exe";
+    public void uploadEmployeeProfilePicture(String fileName) throws Exception {
+        genericMethods.click(driver, "uploadProfilePictureButton");
+        Thread.sleep(2000);
+        String filePath = System.getProperty("user.dir")+"\\src\\test\\resources\\uploadFiles\\"+fileName;
+        String autoItScriptPath = System.getProperty("user.dir")+"\\src\\test\\resources\\AutoIt\\executable\\script.exe";
         genericMethods.uploadFile(filePath, autoItScriptPath);
+        Thread.sleep(2000);
     }
     
     
