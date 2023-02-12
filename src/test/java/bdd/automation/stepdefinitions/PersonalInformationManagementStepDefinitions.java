@@ -35,7 +35,7 @@ public class PersonalInformationManagementStepDefinitions {
     }
 
     @Then("user uploads profile picture")
-    public void user_uploads_profile_picture() {
+    public void user_uploads_profile_picture() throws Exception {
         personalInformationManagementPage.uploadEmployeeProfilePicture("profilePicture.jpg");
     }
 

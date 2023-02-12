@@ -234,7 +234,8 @@ public class GenericMethods {
     }
     
     public void uploadFile(String filePath, String scriptPath) {
-        
+        System.out.println("Started Execution of AutoIt Script: "+scriptPath);
+        System.out.println("Uploading File: "+filePath);
         ProcessBuilder processBuilder = new ProcessBuilder(scriptPath, filePath);
         try {
             processBuilder.start();
