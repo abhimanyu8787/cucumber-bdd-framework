@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -61,7 +62,15 @@ public class Utility {
         try {
             return driver.findElement((By) mapFromExcel.get(param));
         } catch (Exception e) {
-            throw new Exception(param + "not found");
+            throw new Exception(param + " not found");
+        }
+    }
+    
+    public static List<WebElement> readListFromExcel(String param, WebDriver driver) throws Exception{
+        try {
+            return driver.findElements((By) mapFromExcel.get(param));
+        } catch (Exception e) {
+            throw new Exception(param + " not found");
         }
     }
     

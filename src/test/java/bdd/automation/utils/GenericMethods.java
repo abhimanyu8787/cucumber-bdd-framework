@@ -1,5 +1,9 @@
 package bdd.automation.utils;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,6 +19,7 @@ public class GenericMethods {
     private Select selectList = null;
     private String old_win = null;
     private String latWinHandle;
+    private List<WebElement> elementList;
 
     /**
      * Method to enter text into text field
@@ -189,6 +194,32 @@ public class GenericMethods {
         else if(optionBy.equals("text"))
             selectList.selectByVisibleText(option);
     }
+    
+    /**
+     * Method to select element from dropdown present in Orange HRM website
+     * 
+     * @since: 12/02/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param dropdownLocator 
+     *            : String : Locator of Dropdown which will be clicked to display options
+     * @param dropdownElementsLocator 
+     *            : String : Locator to Identify the List of Options displayed in the dropdown
+     * @param option 
+     *            : String : Option to select
+     * @throws Exception
+     */
+    public void selectfromOrangeHRMDropdown(WebDriver driver, String dropdownLocator, String dropdownElementsLocator, String option) throws Exception {
+        element = Utility.readFromExcel(dropdownLocator, driver);
+        elementList = Utility.readListFromExcel(dropdownElementsLocator, driver);
+        for(WebElement element: elementList) {
+            if(element.getText().equals(option)) {
+                element.click();
+                break;
+            }
+        }
+    }
 
     public void waitForElementToDisplay(WebDriver driver, String objectName, String duration) throws Exception {
         By byEle = Utility.mapFromExcel.get(objectName);
@@ -200,6 +231,16 @@ public class GenericMethods {
         By byEle = Utility.mapFromExcel.get(objectName);
         WebDriverWait wait = (new WebDriverWait(driver, Integer.parseInt(duration) * 1000));
         wait.until(ExpectedConditions.elementToBeClickable(byEle));
+    }
+    
+    public void uploadFile(String filePath, String scriptPath) {
+        
+        ProcessBuilder processBuilder = new ProcessBuilder(scriptPath, filePath);
+        try {
+            processBuilder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

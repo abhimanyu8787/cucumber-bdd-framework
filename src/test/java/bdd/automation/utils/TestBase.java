@@ -22,13 +22,17 @@ public class TestBase {
                 WebDriverManager.chromedriver().setup();
                 String[] chromeConfig = {"--ignore-certificate-errors", "--ignore-ssl-errors=yes","--no-sandbox",
                         "start-maximized"};
-                
+                String userDir = System.getProperty("user.dir");
+                String downloadPath = userDir + "\\src\\test\\resources\\downloadFiles";
+                System.out.println("Download path is being set to: "+downloadPath);
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments(chromeConfig);
                 options.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
                 Map<String, Object> prefs = new HashMap<String, Object>();
                 prefs.put("credentials_enable_service", false);
                 prefs.put("profile.password_manager_enabled", false);
+                prefs.put("profile.default_content_settings.popups", 0);
+                prefs.put("download.default_directory", downloadPath);
                 options.setExperimentalOption("prefs", prefs);
                 
                 driver = new ChromeDriver(options);
