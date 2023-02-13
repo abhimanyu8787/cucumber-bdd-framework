@@ -233,6 +233,13 @@ public class GenericMethods {
         wait.until(ExpectedConditions.elementToBeClickable(byEle));
     }
     
+    /**
+     * Method to execute autoItScript to upload file
+     * @param filePath
+     *            : String : Location of file which needs to be uploaded
+     * @param scriptPath
+     *            : String : Location of the autoItScript
+     */
     public void uploadFile(String filePath, String scriptPath) {
         System.out.println("Started Execution of AutoIt Script: "+scriptPath);
         System.out.println("Uploading File: "+filePath);

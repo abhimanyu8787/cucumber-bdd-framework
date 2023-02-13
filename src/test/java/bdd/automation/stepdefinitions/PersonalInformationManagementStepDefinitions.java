@@ -40,8 +40,8 @@ public class PersonalInformationManagementStepDefinitions {
     }
 
     @Then("click on save")
-    public void click_on_save() {
-        
+    public void click_on_save() throws Exception {
+        personalInformationManagementPage.saveEmployee();
     }
 
 }
