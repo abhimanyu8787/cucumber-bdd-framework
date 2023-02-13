@@ -14,7 +14,7 @@ Feature: Add Employee Functionality Validation
   Scenario Outline: Verify if admin user is able to add employee successfully
   	When user navigates to PIM tab
   	Then user clicks on "Add Employee" button in top navigation menu
-  	And user enters "<first name>" "<middle name>" "<last name>" and <employee id>
+  	And user enters "<first name>" "<middle name>" "<last name>" and "<employee id>"
   	And toggle create login details
   	And user provides "<username>" and "<password>"
   	And user uploads profile picture
@@ -22,7 +22,7 @@ Feature: Add Employee Functionality Validation
   	
   Examples:
   |	first name	|	middle name	|	last name	|	employee id	|	username		| password				|
-  |	Anubhi			| Singh				| Tomar			| 2568				| anubhiTomar	|	anubhiTomar@06	|
+  |	Anubhi			| Singh				| Tomar			| 2569				| anubhiTomar	|	anubhiTomar@06	|
   	
   
     
