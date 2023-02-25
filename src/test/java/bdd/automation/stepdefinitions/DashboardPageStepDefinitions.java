@@ -1,11 +1,11 @@
 package bdd.automation.stepdefinitions;
 
-import org.testng.Assert;
 
 import bdd.automation.pages.DashboardPage;
 import bdd.automation.utils.TestContextSetup;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import static org.junit.Assert.*;
 
 public class DashboardPageStepDefinitions {
     
@@ -20,7 +20,7 @@ public class DashboardPageStepDefinitions {
     @Then("verify if login is successful")
     public void verify_if_login_is_successful() throws Exception {
         String logoText = dashboardPage.getLogoText();
-        Assert.assertEquals(logoText, "Dashboard");
+        assertEquals(logoText, "Dashboard");
     }
     
     @When("user navigates to PIM tab")
