@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -369,6 +370,27 @@ public class GenericMethods {
         }
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].scrollIntoView()", element);
+    }
+    
+    /**
+     * Method to press Backspace n number of times
+     * @param driver
+     *            : WebDriver : driver object
+     * @param objectName
+     *            : String : Object name
+     * @param iteration
+     *            : Integer : Number of times, Backspace will be pressed
+     */
+    public void clickBackspaceButton(WebDriver driver, String objectName, int iteration) throws Exception {
+        try {
+            element = Utility.readFromExcel(objectName, driver);
+        } catch (Exception e) {
+            throw new Exception("Unable to find"+objectName,e);
+        }
+        for(int i = 0; i<iteration; i++) {
+            element.sendKeys(Keys.BACK_SPACE);
+        }
+        
     }
 
 }
