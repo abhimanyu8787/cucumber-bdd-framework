@@ -21,5 +21,9 @@ public class DashboardPage {
     public void navigateToPIM() throws Exception {
         genericMethods.click(driver, "pimDashboardLocator");
     }
+    
+    public String getProfileName() throws Exception {
+        return genericMethods.getElementText(driver, "profileNameLocator");
+    }
 
 }
