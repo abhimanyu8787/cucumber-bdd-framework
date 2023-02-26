@@ -46,6 +46,7 @@ public class PersonalInformationManagementPage {
         genericMethods.enterText(driver, "firstNameTextBox", firstName);
         genericMethods.enterText(driver, "middleNameTextBox", middleName);
         genericMethods.enterText(driver, "lastNameTextBox", lastName);
+        genericMethods.clickBackspaceButton(driver, "employeeIdTextBox", 4);
         genericMethods.enterText(driver, "employeeIdTextBox", employeeId);
     }
     
@@ -70,6 +71,26 @@ public class PersonalInformationManagementPage {
         String autoItScriptPath = System.getProperty("user.dir")+"\\src\\test\\resources\\AutoIt\\executable\\script.exe";
         genericMethods.uploadFile(filePath, autoItScriptPath);
         Thread.sleep(3000);
+    }
+    
+    public void searchEmployeeDetails(String employeeName, String employeeId) throws Exception {
+        genericMethods.enterText(driver, "searchEmployeeNameField", employeeName);
+        genericMethods.enterText(driver, "employeeIdTextBox", employeeId);
+    }
+    
+    public void clickSearchEmployeeButton() throws Exception {
+        genericMethods.click(driver, "searchEmployeeButtonLocator");
+    }
+    
+    public String getSearchedEmployeeNameFromRecordTable() throws Exception {
+        genericMethods.waitForElementToDisplay(driver, "searchedEmployeeFirstNameRecordTable", "5");
+        String firstName = genericMethods.getElementText(driver, "searchedEmployeeFirstNameRecordTable");
+        String lastName = genericMethods.getElementText(driver, "searchedEmployeeLastNameRecordTable");
+        return firstName + " "+ lastName;
+    }
+    
+    public String getSearchedEmployeeIdFromRecordTable() throws Exception {
+        return genericMethods.getElementText(driver, "searchedEmployeeIdRecordTable");
     }
     
     
