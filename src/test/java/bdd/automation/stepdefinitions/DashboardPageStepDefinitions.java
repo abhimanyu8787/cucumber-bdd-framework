@@ -27,5 +27,12 @@ public class DashboardPageStepDefinitions {
     public void user_navigates_to_pim_tab() throws Exception {
         dashboardPage.navigateToPIM();
     }
+    
+    @Then("{string} and {string} is displayed as profile name")
+    public void and_is_displayed_as_profile_name(String firstName, String lastName) throws Exception {
+        String actualProfileName = firstName + " " + lastName;
+        String expectedProfileName = dashboardPage.getProfileName();
+        assertEquals(expectedProfileName, actualProfileName);
+    }
 
 }
