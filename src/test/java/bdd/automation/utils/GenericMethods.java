@@ -392,5 +392,61 @@ public class GenericMethods {
         }
         
     }
+    
+    /**
+     * Method to drag and drop an element from source location to destination location
+     * @param driver
+     *            : WebDriver : driver object
+     * @param sourceObjectName
+     *            : String : Source WebElement Name
+     * @param destinationObjectName
+     *            : String : Destination WebElement Name
+     */
+    public void dragAndDropElement(WebDriver driver, String sourceObjectName, String destinationObjectName) throws Exception {
+        WebElement fromElement, toElement;
+        /*
+         * WebElement fromElement =
+         * driver.findElement(By.xpath("//h5[text()='High Tatras']/parent::li"));
+         * WebElement toElement = driver.findElement(By.xpath("//div[@id='trash']"));
+         */
+        
+          try { fromElement = Utility.readFromExcel(sourceObjectName, driver); } catch
+          (Exception e) { throw new Exception("Unable to find a locator "+
+          sourceObjectName, e); }
+          
+          try { toElement = Utility.readFromExcel(destinationObjectName, driver); }
+          catch (Exception e) { throw new Exception("Unable to find a locator "+
+          destinationObjectName, e); }
+         
+        
+        Actions action = new Actions(driver);
+        action.dragAndDrop(fromElement, toElement).build().perform();
+        Thread.sleep(5000);
+    }
+    
+    public void switchFrameByIndex(WebDriver driver, int index) throws Exception {
+        try {
+            driver.switchTo().frame(index);
+        } catch (Exception e) {
+            throw new Exception("iFrame is not available for the given index", e);
+        }
+    }
+    
+    public void switchFrameByNameOrId(WebDriver driver, String nameOrId) throws Exception {
+        try {
+            driver.switchTo().frame(nameOrId);
+        } catch (Exception e) {
+            throw new Exception("iFrame with name/id "+ nameOrId+" not found", e);
+        }
+    }
+    
+    public void switchFrame(WebDriver driver, String objectName) throws Exception {
+        try {
+            element = Utility.readFromExcel(objectName, driver);
+        } catch (Exception e) {
+            throw new Exception("Unable to find"+objectName,e);
+        }
+        driver.switchTo().frame(element);
+    }
 
 }
