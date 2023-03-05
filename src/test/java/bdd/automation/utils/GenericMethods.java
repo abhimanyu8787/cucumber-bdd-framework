@@ -1,9 +1,17 @@
 package bdd.automation.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -313,6 +321,8 @@ public class GenericMethods {
     
     /**
      * Method to execute autoItScript to upload file
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
      * @param filePath
      *            : String : Location of file which needs to be uploaded
      * @param scriptPath
@@ -342,6 +352,8 @@ public class GenericMethods {
     
     /**
      * Method to navigate forward or backwards
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
      * @param driver
      *            : WebDriver : driver object
      * @param direction
@@ -356,6 +368,8 @@ public class GenericMethods {
     
     /**
      * Method to scroll to a particular element
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
      * @param driver
      *            : WebDriver : driver object
      * @param objectName
@@ -374,6 +388,8 @@ public class GenericMethods {
     
     /**
      * Method to press Backspace n number of times
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
      * @param driver
      *            : WebDriver : driver object
      * @param objectName
@@ -395,6 +411,8 @@ public class GenericMethods {
     
     /**
      * Method to drag and drop an element from source location to destination location
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
      * @param driver
      *            : WebDriver : driver object
      * @param sourceObjectName
@@ -404,11 +422,6 @@ public class GenericMethods {
      */
     public void dragAndDropElement(WebDriver driver, String sourceObjectName, String destinationObjectName) throws Exception {
         WebElement fromElement, toElement;
-        /*
-         * WebElement fromElement =
-         * driver.findElement(By.xpath("//h5[text()='High Tatras']/parent::li"));
-         * WebElement toElement = driver.findElement(By.xpath("//div[@id='trash']"));
-         */
         
           try { fromElement = Utility.readFromExcel(sourceObjectName, driver); } catch
           (Exception e) { throw new Exception("Unable to find a locator "+
@@ -424,6 +437,15 @@ public class GenericMethods {
         Thread.sleep(5000);
     }
     
+    /**
+     * Method to switch frame by index
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param index
+     *            : Integer : Source WebElement Name
+     */
     public void switchFrameByIndex(WebDriver driver, int index) throws Exception {
         try {
             driver.switchTo().frame(index);
@@ -432,6 +454,15 @@ public class GenericMethods {
         }
     }
     
+    /**
+     * Method to switch frame by name or id
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param nameOrId
+     *            : String : Name or Id of iFrame
+     */
     public void switchFrameByNameOrId(WebDriver driver, String nameOrId) throws Exception {
         try {
             driver.switchTo().frame(nameOrId);
@@ -440,6 +471,15 @@ public class GenericMethods {
         }
     }
     
+    /**
+     * Method to switch frame by WebElement
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param objectName
+     *            : String : Locator of the WebElement of frame
+     */
     public void switchFrame(WebDriver driver, String objectName) throws Exception {
         try {
             element = Utility.readFromExcel(objectName, driver);
@@ -447,6 +487,65 @@ public class GenericMethods {
             throw new Exception("Unable to find"+objectName,e);
         }
         driver.switchTo().frame(element);
+    }
+    
+    /**
+     * Method to read data from excel
+     * @since: 05/03/2023
+     * @author: abhimanyu_kumar
+     * @param driver
+     *            : WebDriver : driver object
+     * @param sheet
+     *            : String : name of sheet in which data is supposed to be read from
+     * @param testCaseName
+     *            : String : name of the row from which data is supposed to be read
+     * @param columnName
+     *            : String : name of the column from which data is supposed to be read
+     */
+    public String readDataFromExcel(String excelFileName, String sheet, String testCaseName, String columnName) throws IOException {
+        String filePath = "./src/test/resources/testData";
+        String fileName = excelFileName;
+        String sheetName = sheet;
+        int rowNumber = 0;
+        String cellValue = null;
+        Workbook testWorkbook = null;
+        
+        File file = new File(filePath + "/" + fileName);
+        FileInputStream inputStream = new FileInputStream(file);
+        testWorkbook = new XSSFWorkbook(inputStream);
+        Sheet testSheet = testWorkbook.getSheet(sheetName);
+        int rowCount = testSheet.getLastRowNum() - testSheet.getFirstRowNum();
+        try {
+            for(int i = 0; i<=rowCount; i++) {
+                Row row = testSheet.getRow(i);
+                if(row.getCell(0).getStringCellValue().equals(testCaseName)) {
+                    rowNumber = i;
+                    break;
+                }
+            }
+            
+            int columnNumber = -1;
+            Row row = testSheet.getRow(0);
+            for(int i = 0; i<row.getLastCellNum();i++) {
+                if(row.getCell(i).getStringCellValue().trim().equals(columnName.trim())) {
+                    columnNumber = i;
+                    break;
+                }
+            }
+            
+            row = testSheet.getRow(rowNumber);
+            Cell cell = row.getCell(columnNumber);
+            cellValue = cell.getStringCellValue();
+            inputStream.close();
+            testWorkbook.close();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            System.out.println("data was not found in testdata sheet");
+            return null;
+        }
+        
+        return cellValue;
     }
 
 }
