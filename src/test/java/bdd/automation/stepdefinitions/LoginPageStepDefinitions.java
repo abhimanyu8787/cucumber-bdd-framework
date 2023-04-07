@@ -2,7 +2,7 @@ package bdd.automation.stepdefinitions;
 
 import java.io.IOException;
 
-import org.testng.Assert;
+import static org.junit.Assert.*;
 
 import bdd.automation.pages.LoginPage;
 import bdd.automation.utils.TestContextSetup;
@@ -52,7 +52,7 @@ public class LoginPageStepDefinitions {
     @Then("verify if {string} error message is displayed")
     public void verify_if_error_message_is_displayed(String expectedErrorMessage) throws Exception {
         String actualErorrMessage = loginPage.getInvalidCredentialsErrorMessage();
-        Assert.assertEquals(actualErorrMessage, expectedErrorMessage);
+        assertEquals(actualErorrMessage, expectedErrorMessage);
     }
 
 }
