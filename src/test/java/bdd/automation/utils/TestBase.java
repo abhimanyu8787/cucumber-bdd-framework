@@ -1,12 +1,16 @@
 package bdd.automation.utils;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -36,6 +40,13 @@ public class TestBase {
                 options.setExperimentalOption("prefs", prefs);
                 
                 driver = new ChromeDriver(options);
+                break;
+            }
+            case Remote: {
+                DesiredCapabilities cap = new DesiredCapabilities();
+                cap.setBrowserName("chrome");
+                cap.setPlatform(Platform.LINUX);
+                driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),cap);
                 break;
             }
             default:
