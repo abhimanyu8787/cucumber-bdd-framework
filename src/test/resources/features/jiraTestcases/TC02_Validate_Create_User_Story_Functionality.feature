@@ -1,6 +1,6 @@
 #Author: abhimanyukumar8787@gmail.com
 
-@Regression
+
 Feature: Jira Create User story validations
 
 	Background:
