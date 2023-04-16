@@ -1,6 +1,6 @@
 #Author: abhimanyukumar8787@gmail.com
 
-@Regression
+
 Feature: Login Functionality Validations
 
   @JiraLoginScenario
